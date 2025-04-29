@@ -106,8 +106,13 @@ class CurvesDataManager:
 if __name__ == '__main__':
 
     input_folder_path = 'E:\\pyprojects\\curves\\curves\\sample-data\\'
-    file_names = ['GLC Nominal daily data current month.xlsx']
-    sheet_names = ['1. fwds, short end']
+
+    file_names = ['GLC Nominal daily data current month.xlsx',
+                  'GLC Inflation daily data current month.xlsx',
+                  'GLC Real daily data current month.xlsx',
+                  'OIS daily data current month.xlsx']
+
+    sheet_names = ['1. fwds, short end', '2. fwd curve', '3. spot, short end', '4. spot curve']
 
     dm = CurvesDataManager(input_folder_path, file_names, sheet_names)
 
