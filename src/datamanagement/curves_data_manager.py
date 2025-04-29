@@ -103,8 +103,6 @@ class CurvesDataManager:
 
     def visualize_term_structure_specific(self, df, dataset_name, curve_name):
 
-        plt.close()
-
 
         fig = plt.subplots(figsize=(16, 10))
 
@@ -122,6 +120,7 @@ class CurvesDataManager:
 
 
         plt.plot(df["date"], df[curve_name])
+        plt.draw()
         plt.show()
 
 if __name__ == '__main__':
