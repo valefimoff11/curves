@@ -101,7 +101,27 @@ class CurvesDataManager:
             plt.plot(df["tenor"], df[col])
         plt.show()
 
+    def visualize_term_structure_specific(self, df, dataset_name, curve_name):
 
+        #plt.cla()
+
+        fig = plt.subplots(figsize=(16, 10))
+
+        # Adding a plot title and customizing its font size
+        plt.title('Term Structure - ' + ' ' + dataset_name, fontsize=10)
+
+        # Adding axis labels and customizing their font size
+        plt.xlabel('Date', fontsize=10)
+        plt.ylabel('Rate %', fontsize=10)
+
+        plt.xlim(df["date"].min(), df["date"].max())
+        # Defining and displaying all time axis ticks
+        ticks = list(df["date"])
+        plt.xticks(ticks, rotation=45)
+
+
+        plt.plot(df["date"], df[curve_name])
+        plt.show()
 
 if __name__ == '__main__':
 
@@ -114,13 +134,29 @@ if __name__ == '__main__':
 
     sheet_names = ['1. fwds, short end', '2. fwd curve', '3. spot, short end', '4. spot curve']
 
+    dataset_names = []
+    for file, sheet in zip(file_names, sheet_names):
+        dataset_names.append(file + ' ' + sheet)
+
+    print(dataset_names)
+
     dm = CurvesDataManager(input_folder_path, file_names, sheet_names)
 
     dm.load_curve_data()
 
-    print(dm.curve_data['GLC Nominal daily data current month.xlsx' + " " + '1. fwds, short end'])
+    print(dm.curve_data[dataset_names[0]])
 
-    dataset_name = 'GLC Nominal daily data current month.xlsx' + " " + '1. fwds, short end'
+    dataset_name = dataset_names[0]
 
     dm.visualize_term_structure_all(dm.curve_data[dataset_name], dataset_name)
     dm.visualize_yield_curve_all(dm.curve_data[dataset_name], dataset_name)
+
+    #curve_list = ['4.0', '5.0']
+    curve_list = list(dm.curve_data[dataset_name].columns)
+    curve_list.pop(0)
+    print(curve_list)
+
+    print(curve_list[58])
+    print(dm.curve_data[dataset_name][curve_list[58]])
+
+    dm.visualize_term_structure_specific(dm.curve_data[dataset_name], dataset_name, curve_list[58])
